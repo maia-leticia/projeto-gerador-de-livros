@@ -1,16 +1,38 @@
-import Image from 'next/image';
+interface Livro {
+  id: string;
+  volumeInfo: {
+    title: string;
+    authors?: string[];
+    imageLinks?: {
+      thumbnail?: string;
+    };
+    pageCount?: number;
+  };
+}
+interface CardBookProps {
+  livros: Livro[];
+}
 
-export default function CardBook(){
+export default function CardBook({livros}:CardBookProps){
     return(
-        <div className='w-[17vw] h-[29vw] py-[2.5vw]'>
-            <div className='h-[23vw] bg-[#EFEEE8]'>
-                <p className='w-[11.5vw]'>FOTO</p>
-            </div>
-            <div className='mt-[2.5vw] flex flex-col items-center justify-center'>
-                <h4 className='text-[1.5vw]'>Titulo do livro</h4>
-                <p className='text-[1vw] text-[#888888]'>Autor</p>
-                <p className='text-[1.5vw] text-[#74642F]'>$ 45.00</p>
-            </div>
+        <div className='grid md:grid-cols-4 grid-cols-3 gap-4 w-fit mx-auto'>
+            {livros.map((livro)=>{
+                const info = livro.volumeInfo
+                return(
+                    <div key={livro.id} className='w-[17vw] h-[29vw] my-[3vw] '>
+                        <div className='h-[23vw] bg-[#EFEEE8] flex items-center justify-center'>
+                            <img className="w-[11.458vw]" src={info.imageLinks?.thumbnail} alt={info.title} />
+                        </div>
+                        <div className='mt-[2.5vw] flex flex-col items-center justify-center text-center'>
+                            <h4 className='text-[1.3vw] '>{info.title}</h4>
+                            <p className='text-[1vw] text-[#888888] '>{info.authors?.join(", ")}</p>
+                            <p className='text-[1.5vw] text-[#74642F]'>{info.pageCount} páginas</p>
+                        </div>
+                    </div>                
+                )
+            })}
+
+            
         </div>
     )
 }
