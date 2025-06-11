@@ -41,12 +41,14 @@ export default function Home() {
   return (
     <main className='bg-[#F3F2EC] '>
       <Header/>
-      <div className='flex items-center justify-center pb-10'>
+      <div className='flex items-center justify-center pb-10' id='home'>
         <div className='flex items-center justify-center gap-15'>
           <div className='w-[25vw]'>
             <h2 className='text-[4vw]'>Descubra sua próxima leitura</h2>
             <p className='text-[1vw] pt-[0.8vw] pb-[4vw]'>Faça agora o nosso teste de personalidade e encontre o livro perfeito para o seu momento. Responda algumas perguntas e deixe que a magia da literatura te surpreenda.</p>
-            <div className='w-[10vw] border border-[#C0C0C0] text-[1vw] text-center cursor-pointer'>FAZER TESTE</div>
+            <Link href="/teste">
+              <div className='w-[10vw] border border-[#C0C0C0] text-[1vw] text-center cursor-pointer'>FAZER TESTE</div>
+            </Link>
           </div>
           <div className='w-[25vw] hidden sm:flex'>
             <Image src={book} alt='livro-representativo'/>
