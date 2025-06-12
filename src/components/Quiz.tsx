@@ -49,13 +49,18 @@ export default function Quiz({onSubmit}:Props){
     const [respostas, setRespostas]=useState<Record<string,string>>({})
     const pergunta = perguntas[indice]
     const [respostaAtual, setRespostaAtual] = useState('')
-
+    const[error, setError]=useState(" ")
 
     const handleSelecionar=(opcao:string)=>{
     setRespostas((prev)=>({...prev, [pergunta.id]: opcao}))
     }
 
     const handleAvancar=()=>{
+        setError(" ")
+        if(!respostas[pergunta.id]){
+            setError("Escolha uma alternativa!")
+            return
+        }
         if (indice < perguntas.length-1){
             setIndice(indice+1)
         } else{
@@ -64,9 +69,9 @@ export default function Quiz({onSubmit}:Props){
     }
 
     return(
-        <div>
-            <div className='flex items-center justify-center'>
-                <div>
+        <div className='bg-[#F3F2EC] '>
+            <div className='flex items-center justify-center gap-15'>
+                <div className='w-[40vw]'>
                     <h2 className='text-[#222222] text-[3vw]'>{pergunta.texto}</h2>
                     <div className='grid grid-cols-2 pt-[0.8vw] pb-[4vw] leading-[3.5vw]'>
                         {
@@ -88,9 +93,11 @@ export default function Quiz({onSubmit}:Props){
                             ))
                         }
                     </div>
+                    
+                    <p className={`text-[1vw] text-[red]`}>{error}</p>
                     <button
                     onClick={handleAvancar}
-                    disabled={!respostas[pergunta.id]}
+                    
                     className='w-[10vw] border border-[#C0C0C0] text-[1vw] text-center cursor-pointer'
                     >
                         {indice === perguntas.length -1 ? "Avançar" : "Enviar"}
