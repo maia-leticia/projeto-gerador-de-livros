@@ -7,9 +7,9 @@ import twitter from '@/../public/img/twitter.png'
 export default function Footer(){
     return(
         <footer>
-            <div className='flex gap-[13vw] px-[15vw] py-[3vw] items-baseline'>
+            <div className='flex gap-[13vw] px-[19vw] py-[3vw] items-baseline'>
                 <h1><span className='font-bold text-[3vw]'>BOOK</span>saw</h1>
-                <div className='flex gap-[5vw]'>
+                <div className='flex gap-[2vw]'>
                     <div>
                         <h4 className='text-[1.5vw] mb-[1.2vw]'>Sobre Nós</h4>
                         <ul className='leading-[2vw] text-[#777777] hover:cursor-pointer'>
