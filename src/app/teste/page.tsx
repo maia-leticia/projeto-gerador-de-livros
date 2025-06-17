@@ -20,18 +20,23 @@ export default function teste(){
                 alert(`Não foi possível recomendar um livro: ${resultado.message || "Erro desconhecido."}`);
             }
         };
-        
+        const handleResetQuiz = () => {
+        setLivroRecomendado(null); 
+    };
         return(
             <main>
                 <Header/>
                 {livroRecomendado===null ? (
                     <Quiz onSubmit={handleQuizSubmit}/>
                 ) : (
-                    <Resultados data={livroRecomendado} />
+                    <Resultados data={livroRecomendado} onResetQuiz={handleResetQuiz}/>
                 )
 
-                }              
+                }      
+                <div className='bg-[#EDEBE4] w-[100%] h-[15vw]'></div>
+        
                 <Footer/>
+            
             </main>
         )
 }

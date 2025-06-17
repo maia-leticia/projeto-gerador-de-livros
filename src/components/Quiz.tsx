@@ -116,9 +116,9 @@ export default function Quiz({ onSubmit }: Props) {
   }
 
   return (
-    <div className='bg-[#F3F2EC] h-[42vw]'>
+    <div className=' h-[42vw] pt-[5vw]'>
       <div className='flex items-center justify-center gap-15'>
-        <div className='w-[40vw]'>
+        <div className='w-[60vw]'>
           <div className='bg-[white] w-[100%] h-[0.5vw] rounded-sm border'>
             <div className={`bg-[green] ${progressoClasse} h-[0.4vw] rounded-sm `}></div>
           </div>
@@ -153,9 +153,7 @@ export default function Quiz({ onSubmit }: Props) {
             {loading ? "Carregando..." : (indice === perguntas.length - 1 ? "Recomendar Livro" : "Próximo")}
           </button>
         </div>
-        <div className='w-[25vw] hidden sm:flex'>
-          <Image src={book} alt='livro-representativo' />
-        </div>
+        
       </div>
       <div>
         <div></div>

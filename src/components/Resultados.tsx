@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import book from "@/../public/img/book.png";
+import { useEffect, useState } from 'react';
+import { recomendarLivro } from "@/lib/recomendarLivro";
 
 type Props = {
     data: {
@@ -9,27 +11,64 @@ type Props = {
     descricao: string | null;
     message?: string;
   };
+  onResetQuiz: ()=>void
 }
 
-export default function Resultados({data}:Props){
+export default function Resultados({data, onResetQuiz}:Props){
+
+  const [capa, setCapa] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function buscarCapa() {
+      const resultado = await recomendarLivro(data.livro);
+      setCapa(resultado?.capa || null);
+    }
+    buscarCapa();
+  }, [data.livro]);
+
     return(
-        <main>
-            <div className='flex items-center justify-center pb-10' id='home'>
+
+        <main className='pt-[5vw]'>
+             {data.livro === null || data.message ? (
+                <div className='flex items-center justify-center pb-10' id='home'>
                 <div className='flex items-center justify-center gap-15'>
-                <div className='w-[25vw] hidden sm:flex'>
-                    <Image src={book} alt='livro-representativo'/>
-                </div>
-                <div className='w-[25vw]'>
-                    <h2 className='text-[4vw]'>{data.livro}</h2>
-                    <h2 className='text-[2vw]'>Por: {data.autor}</h2>
-                    <p className='text-[1vw] pt-[0.8vw] pb-[4vw]'>{data.descricao}</p>
-                    <Link href="/teste">
-                    <div className='w-[10vw] border border-[#C0C0C0] text-[1vw] text-center cursor-pointer'>REFAZER TESTE</div>
-                    </Link>
+                <div className='w-[60vw]'>
+                    <h2 className='text-[3vw]'>Desculpe não encontramos o livro perfeito para você :(</h2>
+                    <p className='text-[1vw] pt-[0.8vw] pb-[4vw]'>Tente novamente, não desista!</p>
+                    <div
+                        onClick={onResetQuiz}
+                        className='w-[10vw] border border-[#C0C0C0] text-[1vw] text-center cursor-pointer hover:bg-gray-100' 
+                    >
+                        Tentar de novo
+                    </div>
                 </div>
                 
                 </div>
             </div>
+        ) : (
+            <div className='flex items-center justify-center pb-10' id='home'>
+                <div className='flex items-center justify-center gap-15'>
+                <div className='w-[25vw] hidden sm:flex'>
+                    <img className='w-[20vw]' src={capa || book} alt={data.livro} />
+                </div>
+                <div className='w-[25vw]'>
+                    <h2 className='text-[3vw]'>{data.livro}</h2>
+                    <h2 className='text-[2vw]'>Por: {data.autor}</h2>
+                    <p className='text-[1vw] pt-[0.8vw] pb-[4vw]'>{data.descricao}</p>
+                    <div
+                        onClick={onResetQuiz} // Chame a função do pai
+                        className='w-[10vw] border border-[#C0C0C0] text-[1vw] text-center cursor-pointer hover:bg-gray-100' // Adicionado hover
+                    >
+                        Novo quiz
+                    </div>
+                </div>
+                
+                </div>
+            </div>
+        )
+
+        }
+            
         </main>
     )
 }

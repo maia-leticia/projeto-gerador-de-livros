@@ -1,4 +1,4 @@
-export async function buscarLivrosPorEstilo(estilo: string) {
+export async function buscarLivrosPorEstilo(estilo: string ) {
   const resposta = await fetch(
     `https://www.googleapis.com/books/v1/volumes?q=subject:${encodeURIComponent(estilo)}&maxResults=8&orderBy=relevance&printType=books`
   );
