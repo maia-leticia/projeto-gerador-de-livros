@@ -38,7 +38,7 @@ const perguntas: Pergunta[] = [
 ];
 
 type Props = {
-  onSubmit: (respostas: Record<string, string>) => void;
+  onSubmit: (resultado: { livro: string | null; autor: string | null; descricao: string | null; message?: string }) => void;
 }
 
 export default function Quiz({ onSubmit }: Props) {
@@ -47,33 +47,32 @@ export default function Quiz({ onSubmit }: Props) {
   const pergunta = perguntas[indice]
   const [respostaAtual, setRespostaAtual] = useState('')
   const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false); // Novo estado para controlar o loading
+  const [loading, setLoading] = useState(false); 
 
   const progressoClasse = [
     "w-0",
-    "w-1/5", // Ajustado para 5 perguntas
+    "w-1/5", 
     "w-2/5",
     "w-3/5",
     "w-4/5",
     "w-full"
   ][indice];
 
-  // Adicionado useEffect para sincronizar respostaAtual com respostas
   useEffect(() => {
     setRespostaAtual(respostas[pergunta.id] || '');
   }, [pergunta.id, respostas]);
 
   const handleSelecionar = (opcao: string) => {
-    setRespostaAtual(opcao); // Atualiza a resposta selecionada na UI
-    setRespostas((prev) => ({ ...prev, [pergunta.id]: opcao })); // Salva a resposta no estado geral
-    setError(""); // Limpa o erro ao selecionar uma opção
+    setRespostaAtual(opcao);
+    setRespostas((prev) => ({ ...prev, [pergunta.id]: opcao })); 
+    setError(""); 
   }
 
   const enviarRespostasParaGemini = async () => {
-    setLoading(true); // Ativa o estado de loading
-    setError(""); // Limpa erros anteriores
+    setLoading(true); 
+    setError(""); 
     try {
-      const response = await fetch('/api/gemini', { // AQUI É A MUDANÇA
+      const response = await fetch('/api/gemini', { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -85,24 +84,21 @@ export default function Quiz({ onSubmit }: Props) {
 
       if (response.ok) {
         if (data.livro && data.autor) {
-          // Aqui você pode chamar a função onSubmit ou lidar com a recomendação
-          // console.log("Livro recomendado:", data.livro, "por", data.autor);
-          // Supondo que onSubmit espera um objeto com livro e autor ou similar
-          onSubmit({ livro: data.livro, autor: data.autor });
+          onSubmit({ livro: data.livro, autor: data.autor, descricao: data.descricao });
         } else {
           setError(data.message || "Não foi possível obter uma recomendação de livro.");
-          onSubmit({ livro: "Nenhum livro encontrado", autor: "" }); // Envia um feedback negativo
+          onSubmit({ livro: "Nenhum livro encontrado", autor: "", descricao:"" }); 
         }
       } else {
         setError(data.message || "Ocorreu um erro ao buscar a recomendação.");
-        onSubmit({ livro: "Erro na recomendação", autor: "" }); // Envia um feedback de erro
+        onSubmit({ livro: "Erro na recomendação", autor: "", descricao:""}); 
       }
     } catch (err) {
       console.error('Erro ao enviar respostas para o Gemini:', err);
       setError("Não foi possível conectar com o servidor de recomendação.");
-      onSubmit({ livro: "Erro de conexão", autor: "" }); // Envia um feedback de erro de conexão
+      onSubmit({ livro: "Erro de conexão", autor: "",descricao:"" }); 
     } finally {
-      setLoading(false); // Desativa o estado de loading
+      setLoading(false); 
     }
   }
 
@@ -133,13 +129,13 @@ export default function Quiz({ onSubmit }: Props) {
                 <label
                   key={opcao}
                   onClick={() => handleSelecionar(opcao)}
-                  className='flex text-[#7A7A7A] text-[1.5vw] gap-[1vw] cursor-pointer' // Adicionado cursor-pointer
+                  className='flex text-[#7A7A7A] text-[1.5vw] gap-[1vw] cursor-pointer' 
                 >
                   <input
                     type="radio"
                     value={opcao}
                     checked={respostaAtual === opcao}
-                    onChange={() => {}} // onChange handler vazio porque a lógica está no onClick do label
+                    onChange={() => {}} 
                     className='w-[1.3vw] accent-[#74642F]'
                   />
                   {opcao}
@@ -151,8 +147,8 @@ export default function Quiz({ onSubmit }: Props) {
           <p className={`text-[1vw] text-[red] `}>{error}</p>
           <button
             onClick={handleAvancar}
-            disabled={loading} // Desabilita o botão enquanto estiver carregando
-            className='w-[10vw] border border-[#C0C0C0] text-[1vw] text-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed' // Estilo para disabled
+            disabled={loading} 
+            className='w-[10vw] border border-[#C0C0C0] text-[1vw] text-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed'
           >
             {loading ? "Carregando..." : (indice === perguntas.length - 1 ? "Recomendar Livro" : "Próximo")}
           </button>

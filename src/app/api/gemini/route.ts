@@ -32,24 +32,27 @@ export async function POST(req: NextRequest) {
       .filter(Boolean)
       .join(', ');
 
-    const prompt = `Baseado nas seguintes preferências: ${preferencias}. Por favor, me sugira um único livro que se encaixe perfeitamente. O retorno deve ser SOMENTE o nome do livro e o nome do autor, formatados exatamente como 'Nome do Livro' por 'Nome do Autor'. Não inclua nenhuma outra informação ou frase. Se você não conseguir sugerir um livro, retorne 'Nenhum livro encontrado'.`;
+    const prompt = `Baseado nas seguintes preferências: ${preferencias}. Por favor, me sugira um único livro que se encaixe perfeitamente. O retorno deve ser SOMENTE o nome do livro, nome do autor, e uma breve descrição formatados exatamente como 'Nome do Livro' por 'Nome do Autor' por 'Descrição'. Não inclua nenhuma outra informação ou frase. Se você não conseguir sugerir um livro, retorne 'Nenhum livro encontrado'.`;
 
     const result = await model.generateContent(prompt);
     const response = result.response;
     const text = response.text().trim();
+
+    console.log("Resposta bruta do Gemini:", text)
 
     if (text.includes("Nenhum livro encontrado")) {
       return NextResponse.json({ livro: null, autor: null, message: "Não foi possível encontrar um livro com base nas preferências." }, { status: 200 });
     }
 
     const parts = text.split(' por ');
-    if (parts.length === 2) {
+    if (parts.length === 3) {
       const livro = parts[0].trim().replace(/^['"]|['"]$/g, '');
       const autor = parts[1].trim().replace(/^['"]|['"]$/g, '');
-      return NextResponse.json({ livro, autor }, { status: 200 });
+      const descricao = parts[2].trim().replace(/^['"]|['"]$/g, '');
+      return NextResponse.json({ livro, autor, descricao }, { status: 200 });
     } else {
       console.warn("Formato de resposta inesperado do Gemini:", text);
-      return NextResponse.json({ livro: null, autor: null, message: "Formato de sugestão inválido." }, { status: 200 });
+      return NextResponse.json({ livro: null, autor: null, descricao: null, message: "Formato de sugestão inválido." }, { status: 200 });
     }
 
   } catch (error) {
