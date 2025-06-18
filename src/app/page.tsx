@@ -60,7 +60,7 @@ export default function Home() {
 
       <div className='flex items-center justify-center p-20' >
 
-        <div className='pb-20  w-[74vw] border-t border-b border-[#E0E0E0] relative'>
+        <div className='pb-20  w-[74vw] border-t border-b border-[#E0E0E0] relative' id='relevante'>
           <div className='absolute bg-[#F3F2EC] px-[4vw] left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
             <h3 className='text-[2.5vw]'>Livros Relevantes</h3>
           </div>
@@ -86,7 +86,7 @@ export default function Home() {
           <Image src={line} alt='linha decorativa'/>
         </div>
         <div className='text-center w-[39vw]'>
-          <p className='text-[1.354vw] text-[#7A7A7A] mb-[1vw]'>"{frase}"</p>
+          <p className='text-[1.354vw] text-[#7A7A7A] mb-[1vw]'>&quot;{frase}&quot;</p>
           <p className='text-[1.146vw]'>- {autorFrase}</p>
         </div>
       </div>

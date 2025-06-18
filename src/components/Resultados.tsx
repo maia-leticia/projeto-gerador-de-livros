@@ -49,7 +49,7 @@ export default function Resultados({data, onResetQuiz}:Props){
             <div className='flex items-center justify-center pb-10' id='home'>
                 <div className='flex items-center justify-center gap-15'>
                 <div className='w-[25vw] hidden sm:flex'>
-                    <img className='w-[20vw]' src={capa || book} alt={data.livro} />
+                    <Image  width={200} height={300} src={capa || book} alt={data.livro} />
                 </div>
                 <div className='w-[25vw]'>
                     <h2 className='text-[3vw]'>{data.livro}</h2>
