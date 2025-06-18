@@ -9,7 +9,7 @@ import { useState } from 'react';
 
 
 
-export default function teste(){
+export default function Teste(){
     const [livroRecomendado, setLivroRecomendado] = useState<{ livro: string | null; autor: string | null; descricao: string | null; message?: string } | null>(null);
     const handleQuizSubmit = (resultado: { livro: string | null; autor: string | null; descricao: string | null; message?: string }) => {
             console.log("Resultado do Quiz recebido no TestePage:", resultado);
