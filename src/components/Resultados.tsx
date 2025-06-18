@@ -56,8 +56,8 @@ export default function Resultados({data, onResetQuiz}:Props){
                     <h2 className='text-[2vw]'>Por: {data.autor}</h2>
                     <p className='text-[1vw] pt-[0.8vw] pb-[4vw]'>{data.descricao}</p>
                     <div
-                        onClick={onResetQuiz} // Chame a função do pai
-                        className='w-[10vw] border border-[#C0C0C0] text-[1vw] text-center cursor-pointer hover:bg-gray-100' // Adicionado hover
+                        onClick={onResetQuiz} 
+                        className='w-[10vw] border border-[#C0C0C0] text-[1vw] text-center cursor-pointer hover:bg-gray-100'
                     >
                         Novo quiz
                     </div>

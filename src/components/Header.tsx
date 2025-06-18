@@ -23,8 +23,8 @@ export default function Header(){
         <div className='flex justify-around items-center p-10 '>
             <h1><span className='font-bold text-[3vw]'>BOOK</span>saw</h1>
             <ul className='hidden sm:flex gap-10 text-[1vw] '>
-                <li className='hover:text-[#74642F]'><Link href="#">Home</Link></li>
-                <li className='hover:text-[#74642F]'><Link href="#">Em alta</Link></li>
+                <li className='hover:text-[#74642F]'><Link href="/">Home</Link></li>
+                <li className='hover:text-[#74642F]'><Link href="#">Relevante</Link></li>
                 <li className='hover:text-[#74642F]'><Link href="#">Quote</Link></li>
                 <li className='hover:text-[#74642F]'><Link href="#">Contato</Link></li>
             </ul>
