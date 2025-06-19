@@ -1,8 +1,5 @@
 'use client'
 import { useState, useEffect } from 'react'
-import Image from 'next/image';
-import book from "@/../public/img/book.png";
-
 type Pergunta = {
   id: string
   texto: string
