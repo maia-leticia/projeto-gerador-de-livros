@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import Image from 'next/image';
 import book from "@/../public/img/book.png";
 import { useEffect, useState } from 'react';
