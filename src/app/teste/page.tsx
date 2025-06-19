@@ -14,11 +14,6 @@ export default function Teste(){
     const handleQuizSubmit = (resultado: { livro: string | null; autor: string | null; descricao: string | null; message?: string }) => {
             console.log("Resultado do Quiz recebido no TestePage:", resultado);
             setLivroRecomendado(resultado); 
-            if (resultado.livro && resultado.autor) {
-                alert(`Livro recomendado: "${resultado.livro}" por ${resultado.autor} é ${resultado.descricao}`);         
-            } else {
-                alert(`Não foi possível recomendar um livro: ${resultado.message || "Erro desconhecido."}`);
-            }
         };
         const handleResetQuiz = () => {
         setLivroRecomendado(null); 

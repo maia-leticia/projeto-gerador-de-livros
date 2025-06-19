@@ -33,7 +33,7 @@ const preferencias = Object.entries(respostasQuiz)
   .filter(Boolean)
   .join(', ');
 
-    const prompt = `Baseado nas seguintes preferências: ${preferencias}. Por favor, me sugira um único livro que se encaixe perfeitamente. O retorno deve ser SOMENTE o nome do livro, nome do autor, e uma breve descrição formatados exatamente como 'Nome do Livro' por 'Nome do Autor' por 'Descrição'. Não inclua nenhuma outra informação ou frase. Se você não conseguir sugerir um livro, retorne 'Nenhum livro encontrado'.`;
+    const prompt = `Baseado nas seguintes preferências: ${preferencias}. Por favor, me sugira um único livro que exista e se encaixe perfeitamente e possua no Google Books. O retorno deve ser SOMENTE o nome do livro, nome do autor, e uma breve descrição formatados exatamente como 'Nome do Livro' por 'Nome do Autor' por 'Descrição'. Não inclua nenhuma outra informação ou frase. Se você não conseguir sugerir um livro, retorne 'Nenhum livro encontrado'.`;
 
     const result = await model.generateContent(prompt);
     const response = result.response;
