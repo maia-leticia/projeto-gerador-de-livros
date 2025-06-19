@@ -1,3 +1,5 @@
+import Image from "next/image";
+import book from "@/../public/img/book.png";
 interface Livro {
   id: string;
   volumeInfo: {
@@ -21,7 +23,13 @@ export default function CardBook({livros}:CardBookProps){
                 return(
                     <div key={livro.id} className='w-[17vw] h-[29vw] my-[3vw] '>
                         <div className='h-[23vw] bg-[#EFEEE8] flex items-center justify-center'>
-                            <img className="w-[11.458vw]" src={info.imageLinks?.thumbnail} alt={info.title} />
+                            <Image
+                            className="w-[11.458vw] h-auto"
+                              src={(info.imageLinks?.thumbnail) || book}
+                              alt={info.title}
+                              width={150}
+                              height={200}
+                            />
                         </div>
                         <div className='mt-[2.5vw] flex flex-col items-center justify-center text-center'>
                             <h4 className='text-[1.3vw] '>{info.title}</h4>
