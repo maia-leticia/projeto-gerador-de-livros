@@ -18,19 +18,20 @@ export async function POST(req: NextRequest) {
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 
-    const preferencias = Object.entries(respostasQuiz)
-      .map(([perguntaId, resposta]) => {
-        switch (perguntaId) {
-          case 'genero': return `gênero ${resposta}`;
-          case 'humor': return `com ${resposta === 'Sim' ? 'toque de humor' : resposta === 'Não' ? 'nenhum humor' : 'ou sem humor'}`;
-          case 'complexidade': return `leitura ${resposta === 'Tanto faz' ? 'leve ou densa' : resposta}`;
-          case 'ambientacao': return `ambientado em época ${resposta === 'Não importa' ? 'atual, futurista ou histórica' : resposta.toLowerCase()}`;
-          case 'protagonista': return `com protagonista ${resposta.toLowerCase()}`;
-          default: return '';
-        }
-      })
-      .filter(Boolean)
-      .join(', ');
+const preferencias = Object.entries(respostasQuiz)
+  .map(([perguntaId, resposta]) => {
+    if (typeof resposta !== 'string') return '';
+    switch (perguntaId) {
+      case 'genero': return `gênero ${resposta}`;
+      case 'humor': return `com ${resposta === 'Sim' ? 'toque de humor' : resposta === 'Não' ? 'nenhum humor' : 'ou sem humor'}`;
+      case 'complexidade': return `leitura ${resposta === 'Tanto faz' ? 'leve ou densa' : resposta}`;
+      case 'ambientacao': return `ambientado em época ${resposta === 'Não importa' ? 'atual, futurista ou histórica' : resposta.toLowerCase()}`;
+      case 'protagonista': return `com protagonista ${resposta.toLowerCase()}`;
+      default: return '';
+    }
+  })
+  .filter(Boolean)
+  .join(', ');
 
     const prompt = `Baseado nas seguintes preferências: ${preferencias}. Por favor, me sugira um único livro que se encaixe perfeitamente. O retorno deve ser SOMENTE o nome do livro, nome do autor, e uma breve descrição formatados exatamente como 'Nome do Livro' por 'Nome do Autor' por 'Descrição'. Não inclua nenhuma outra informação ou frase. Se você não conseguir sugerir um livro, retorne 'Nenhum livro encontrado'.`;
 
