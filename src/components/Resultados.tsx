@@ -8,7 +8,7 @@ type Props = {
     livro: string | null;
     autor: string | null;
     descricao: string | null;
-    message?: string;
+    message?: string ;
   };
   onResetQuiz: ()=>void
 }
@@ -24,12 +24,12 @@ export default function Resultados({data, onResetQuiz}:Props){
     }
     buscarCapa();
   }, [data.livro]);
-  alert(data.livro)
+
     return(
 
         <main className='pt-[5vw]'>
             
-             {(!data.livro || data.livro.trim() === "Nenhum livro encontrado" || data.message) ? (
+             {data.autor == "" ? (
                 <div className='flex items-center justify-center pb-10' id='home'>
                 <div className='flex items-center justify-center gap-15'>
                 <div className='w-[60vw]'>
